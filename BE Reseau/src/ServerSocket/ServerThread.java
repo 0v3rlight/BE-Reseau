@@ -14,7 +14,7 @@ public class ServerThread extends Thread{
 	
 	public DatagramSocket ServerSocket;
 	public DatagramSocket ClientSocket;
-	private byte[] buffer = new byte[512];
+	private byte[] buffer = new byte[1024];
 	public ServerThreadAnswer serverThreadAnswer;
 	public ArrayList<String> Messages;
 	public int Local_Port;

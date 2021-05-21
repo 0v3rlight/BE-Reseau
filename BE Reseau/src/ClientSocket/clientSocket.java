@@ -65,6 +65,7 @@ public class clientSocket {
 			ClientThread.addMessage(temp);
 			Message = Message.substring(max_char);
 		}
+		ClientThread.addMessage(Message);
 		
 	}
 

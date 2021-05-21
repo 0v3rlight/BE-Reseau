@@ -30,15 +30,15 @@ public class main {
 	
 	public static void main(String[] args){
 
-		modeServer = true;
-		modeClient = false;
-		IP_distante="192.168.1.11";
+		modeServer = false;
+		modeClient = true;
+		IP_distante="127.0.0.1";
 		Distant_Port=50001;
 		Local_Port=50001;
 		int errorRate=2;
 
-		int Distant_Server_Port = 50001;
-		int Distant_Client_Port = 50002;
+		int Distant_Server_Port = 50003;
+		int Distant_Client_Port = 50004;
 		int Local_Server_Port = 50001;
 		int Local_Client_Port = 50002;
 		

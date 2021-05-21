@@ -90,6 +90,7 @@ public class ClientThread extends Thread{
 				
 				//on envoie le message
 				String Message = MessageList.removeFirst();
+				System.out.println(Message);
 				send(Message);
 				System.out.println("ClientThread : message envoyé");
 				//on attends d'avoir la réponse
@@ -112,6 +113,13 @@ public class ClientThread extends Thread{
 						System.out.println("ClientThread : on renvoie le message");
 					}
 				}catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
