@@ -5,8 +5,8 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
-import ClientSocket.clientSocket;
-import ServerSocket.ServerThread;
+import ClientSocket.MICclientSocket;
+import ServerSocket.MICServerThread;
 
 public class main {
 	static String Lorem = "Eminuit autem inter humilia supergressa iam impotentia fines mediocrium delictorum nefanda Clematii cuiusdam Alexandrini nobilis mors repentina; cuius socrus cum misceri sibi generum, flagrans eius amore, non impetraret, ut ferebatur, per palatii pseudothyrum introducta, oblato pretioso reginae monili id adsecuta est, ut ad Honoratum tum comitem orientis formula missa letali omnino scelere nullo contactus idem Clematius nec hiscere nec loqui permissus occideretur.\r\n"
@@ -57,14 +57,14 @@ public class main {
 		}
 		
 		if (modeServer) {
-			ServerThread ServerThread = new ServerThread(IP_distante, Ports);
+			MICServerThread ServerThread = new MICServerThread(IP_distante, Ports);
 			ServerThread.start();
 			//System.wait(10000);
 		}
 		
 		
 		if (modeClient) {
-			clientSocket clientSocket = new clientSocket(IP_distante, Ports, errorRate);
+			MICclientSocket clientSocket = new MICclientSocket(IP_distante, Ports, errorRate);
 			clientSocket.sendMessage(Lorem);
 		}
 		

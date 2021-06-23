@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ClientSocket.clientSocket;
-import ServerSocket.ServerThread;
+import ClientSocket.MICclientSocket;
+import ServerSocket.MICServerThread;
 
 public class mictcp {
 	
@@ -22,8 +22,8 @@ public class mictcp {
 
 	private String Distant_IP;
 	
-	private ServerThread ServerThread;
-	private clientSocket clientSocket;
+	private MICServerThread ServerThread;
+	private MICclientSocket clientSocket;
 
 	
 	public mictcp(String mode, String Address, int LocalPort, int DistantPort, int ErrorRate) {
@@ -33,14 +33,14 @@ public class mictcp {
 		this.setDistantPort(DistantPort);
 		
 		if (modeServer) {
-			ServerThread ServerThread = new ServerThread(Distant_IP, Ports);
+			MICServerThread ServerThread = new MICServerThread(Distant_IP, Ports);
 			ServerThread.start();
 			//System.wait(10000);
 		}
 		
 		
 		if (modeClient) {
-			clientSocket clientSocket = new clientSocket(Distant_IP, Ports, ErrorRate);
+			MICclientSocket clientSocket = new MICclientSocket(Distant_IP, Ports, ErrorRate);
 		}
 		
 	}

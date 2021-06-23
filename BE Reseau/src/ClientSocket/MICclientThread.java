@@ -9,7 +9,7 @@ import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class ClientThread extends Thread{
+public class MICclientThread extends Thread{
 	
 	public InetAddress Local_IP_address;
 	public InetAddress Distant_IP_address;
@@ -21,8 +21,10 @@ public class ClientThread extends Thread{
 	public DatagramSocket ClientSocket;
 	private byte[] buffer = new byte[256];
 	boolean erreurAcceptable;
+	
 	private int ErrorRate;
 	private int ErrorNbr;
+	private int sequenceNumber;
 	
 	/*
 	public ClientThread(InetAddress Local_IP_address, InetAddress Distant_IP_address) {
@@ -44,7 +46,7 @@ public class ClientThread extends Thread{
 	}
 	*/
 	
-	public ClientThread(InetAddress Local_IP_address, InetAddress Distant_IP_address,  Map<String, Integer> Ports, int ErrorRate) {
+	public MICclientThread(InetAddress Local_IP_address, InetAddress Distant_IP_address,  Map<String, Integer> Ports, int ErrorRate) {
 		
 		this.Local_IP_address= Local_IP_address;
 		this.Distant_IP_address = Distant_IP_address;
@@ -130,14 +132,11 @@ public class ClientThread extends Thread{
 	public void send(String Packet) {
 		//on construit le datagramme
 		System.out.println("ClientThread : construction du message");
-		System.out.println(Distant_IP_address);
-		Packet = Local_IP_address.toString().concat("/").concat(Packet);
-		byte[] ByteMessage = Packet.getBytes();
-		DatagramPacket Datagram = new DatagramPacket(ByteMessage, ByteMessage.length, this.Distant_IP_address , Ports.get("Distant_Server_Port"));
+		MICDatagram datagram = new MICDatagram(this.sequenceNumber, Packet, this.Local_IP_address, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
 		
 		//on envoie le datagramme
 		try {
-			ClientSocket.send(Datagram);
+			ClientSocket.send(datagram.getDatagramPacket());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

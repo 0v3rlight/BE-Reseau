@@ -8,7 +8,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-public class ServerThreadAnswer extends Thread {
+public class MICServerThreadAnswer extends Thread {
 
 	public DatagramSocket ClientSocket;
 	public int Distant_Port;
@@ -17,7 +17,7 @@ public class ServerThreadAnswer extends Thread {
 	private int Local_Port;
 	public Map<String, Integer> Ports;
 	
-	public ServerThreadAnswer() {
+	public MICServerThreadAnswer() {
 		try {
 			this.ClientSocket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -27,7 +27,7 @@ public class ServerThreadAnswer extends Thread {
 		
 	}
 	
-	public ServerThreadAnswer(InetAddress Distant_IP_address) {
+	public MICServerThreadAnswer(InetAddress Distant_IP_address) {
 		this.Distant_IP_address = Distant_IP_address;
 		try {
 			this.ClientSocket = new DatagramSocket();
@@ -38,7 +38,7 @@ public class ServerThreadAnswer extends Thread {
 		
 	}
 	
-	public ServerThreadAnswer(InetAddress Distant_IP_address, Map<String, Integer> Ports) {
+	public MICServerThreadAnswer(InetAddress Distant_IP_address, Map<String, Integer> Ports) {
 		/*
 		this.Local_Port = Local_Port;
 		this.Distant_Port = Distant_Port;

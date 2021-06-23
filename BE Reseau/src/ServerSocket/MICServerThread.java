@@ -10,19 +10,19 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ServerThread extends Thread{
+public class MICServerThread extends Thread{
 	
 	public DatagramSocket ServerSocket;
 	public DatagramSocket ClientSocket;
 	private byte[] buffer = new byte[1024];
-	public ServerThreadAnswer serverThreadAnswer;
+	public MICServerThreadAnswer serverThreadAnswer;
 	public ArrayList<String> Messages;
 	public int Local_Port;
 	public int Distant_Port;
 	public InetAddress Distant_IP_address;
 	public boolean run;
 	
-	public ServerThread(String Distant_IP_address) {
+	public MICServerThread(String Distant_IP_address) {
 		
 		try {
 			this.ServerSocket = new DatagramSocket();
@@ -32,17 +32,17 @@ public class ServerThread extends Thread{
 		}
 		try {
 			this.Distant_IP_address = InetAddress.getByName(Distant_IP_address);
-			this.serverThreadAnswer = new ServerThreadAnswer(this.Distant_IP_address);
+			this.serverThreadAnswer = new MICServerThreadAnswer(this.Distant_IP_address);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
-		this.serverThreadAnswer = new ServerThreadAnswer();
+		this.serverThreadAnswer = new MICServerThreadAnswer();
 		this.serverThreadAnswer.start();
-		System.out.println("ServerThread créé");
+		System.out.println("ServerThread crÃ©Ã©");
 	}
 	
-	public ServerThread(String Distant_IP_address, Map<String, Integer> Ports ) {
+	public MICServerThread(String Distant_IP_address, Map<String, Integer> Ports ) {
 		/*
 		this.Distant_Port = Distant_Port;
 		this.Local_Port = Local_Port;
@@ -56,13 +56,13 @@ public class ServerThread extends Thread{
 		}
 		try {
 			this.Distant_IP_address = InetAddress.getByName(Distant_IP_address);
-			this.serverThreadAnswer = new ServerThreadAnswer(this.Distant_IP_address, Ports);
+			this.serverThreadAnswer = new MICServerThreadAnswer(this.Distant_IP_address, Ports);
 			this.serverThreadAnswer.start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("ServerThread créé");
+		System.out.println("ServerThread crï¿½ï¿½");
 	}
 	
 	

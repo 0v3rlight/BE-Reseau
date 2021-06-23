@@ -4,12 +4,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-public class clientSocket {
+public class MICclientSocket {
 
 	public InetAddress Local_IP_address;
 	public InetAddress Distant_IP_address;
 	public int Distant_Port;
-	public ClientThread ClientThread;
+	public MICclientThread MICclientThread;
 	private int Local_Port;
 	public Map<String, Integer> Ports;
 	public int ErrorRate;
@@ -32,7 +32,7 @@ public class clientSocket {
 	}
 	*/
 
-	public clientSocket(String Distant_IP_address, Map<String, Integer> Ports,  int ErrorRate) {
+	public MICclientSocket(String Distant_IP_address, Map<String, Integer> Ports,  int ErrorRate) {
 		try {
 			this.Local_IP_address = InetAddress.getLocalHost();
 			this.Ports = Ports;
@@ -49,8 +49,8 @@ public class clientSocket {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.ClientThread = new ClientThread(this.Local_IP_address, this.Distant_IP_address, this.Ports, this.ErrorRate);
-		this.ClientThread.start();
+		this.MICclientThread = new MICclientThread(this.Local_IP_address, this.Distant_IP_address, this.Ports, this.ErrorRate);
+		this.MICclientThread.start();
 		System.out.println("clientSocket créé");
 	}
 	
@@ -62,10 +62,10 @@ public class clientSocket {
 		
 		while(Message.length()>=max_char) {
 			temp = Message.substring(0,max_char);
-			ClientThread.addMessage(temp);
+			MICclientThread.addMessage(temp);
 			Message = Message.substring(max_char);
 		}
-		ClientThread.addMessage(Message);
+		MICclientThread.addMessage(Message);
 		
 	}
 
