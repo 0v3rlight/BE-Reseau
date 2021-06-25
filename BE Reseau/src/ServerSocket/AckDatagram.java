@@ -6,7 +6,6 @@ import java.net.UnknownHostException;
 
 public class AckDatagram{
 
-    private String data;
     private int seq;
     private DatagramPacket datagram;
     private String stringPacket;
@@ -30,12 +29,10 @@ public class AckDatagram{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.data = temp[2];
     }
     
-    public AckDatagram(int seq, String data, InetAddress local_IP, InetAddress distant_IP, int port){
+    public AckDatagram(int seq, InetAddress local_IP, InetAddress distant_IP, int port){
     	this.seq = seq;
-    	this.data = data;
     	this.Local_IP_address = local_IP.toString();
     	this.Distant_IP_address = distant_IP.toString();
     	this.Distant_IP_address_INET = distant_IP;
@@ -44,7 +41,7 @@ public class AckDatagram{
     						.concat("/")
     						.concat(this.Local_IP_address)
     						.concat("/")
-    						.concat(data);
+    						.concat("ACK");
     	this.bytePacket = this.stringPacket.getBytes();
     	this.datagram = new DatagramPacket(bytePacket, bytePacket.length,
     										this.Distant_IP_address_INET,

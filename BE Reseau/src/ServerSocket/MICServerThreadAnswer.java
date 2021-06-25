@@ -8,6 +8,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Map;
 
+import ClientSocket.MICDatagram;
+
 public class MICServerThreadAnswer extends Thread {
 
 	public DatagramSocket ClientSocket;
@@ -58,7 +60,7 @@ public class MICServerThreadAnswer extends Thread {
 		
 	}
 	
-	public void repondre(DatagramPacket datagram) {
+	public void repondre(MICDatagram datagram) {
 		InetAddress address;
 		String message;
 		String reponseTxt;

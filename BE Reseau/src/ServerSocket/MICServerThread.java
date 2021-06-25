@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import ClientSocket.MICDatagram;
+
 public class MICServerThread extends Thread{
 	
 	public DatagramSocket ServerSocket;
@@ -77,9 +79,10 @@ public class MICServerThread extends Thread{
 				e1.printStackTrace();
 			}
 
-			DatagramPacket message = new DatagramPacket(buffer, buffer.length);
+			DatagramPacket messageDatagram = new DatagramPacket(buffer, buffer.length);
 			try {
-				ServerSocket.receive(message);
+				ServerSocket.receive(messageDatagram);
+				MICDatagram message = new MICDatagram(messageDatagram); 
 				System.out.println("ServerThread : message recieved");
 				
 				System.out.println(new String(message.getData()));
