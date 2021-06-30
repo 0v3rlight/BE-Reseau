@@ -24,6 +24,9 @@ public class mictcp {
 	
 	private MICServerThread ServerThread;
 	private MICclientSocket clientSocket;
+	
+	private int errorRate;
+	private int startingSequenceNumber;
 
 	
 	public mictcp(String mode, String Address, int LocalPort, int DistantPort, int ErrorRate) {
@@ -31,16 +34,18 @@ public class mictcp {
 		this.setAddress(Address);
 		this.setLocalPort(LocalPort);
 		this.setDistantPort(DistantPort);
+		this.errorRate = ErrorRate;
+		this.startingSequenceNumber = 0;
 		
 		if (modeServer) {
-			MICServerThread ServerThread = new MICServerThread(Distant_IP, Ports);
+			MICServerThread ServerThread = new MICServerThread(Distant_IP, Ports, startingSequenceNumber);
 			ServerThread.start();
 			//System.wait(10000);
 		}
 		
 		
 		if (modeClient) {
-			MICclientSocket clientSocket = new MICclientSocket(Distant_IP, Ports, ErrorRate);
+			MICclientSocket clientSocket = new MICclientSocket(Distant_IP, Ports, ErrorRate, startingSequenceNumber);
 		}
 		
 	}
