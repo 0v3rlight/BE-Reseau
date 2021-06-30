@@ -19,6 +19,7 @@ public class MICServerThreadAnswer extends Thread {
 	private int Local_Port;
 	public Map<String, Integer> Ports;
 	
+	//deprecated
 	public MICServerThreadAnswer() {
 		try {
 			this.ClientSocket = new DatagramSocket();
@@ -28,7 +29,8 @@ public class MICServerThreadAnswer extends Thread {
 		}
 		
 	}
-	
+
+	//deprecated
 	public MICServerThreadAnswer(InetAddress Distant_IP_address) {
 		this.Distant_IP_address = Distant_IP_address;
 		try {
@@ -60,15 +62,37 @@ public class MICServerThreadAnswer extends Thread {
 		
 	}
 	
+	
+	//deprecated
 	public void repondre(MICDatagram datagram) {
 		InetAddress address;
 		String message;
 		String reponseTxt;
-		String strDatagram = new String(datagram.getData(), datagram.getOffset(),datagram.getLength());
-		String[] temp = strDatagram.split("/",1);
-		
+		String strDatagram = datagram.getData();
+		String[] temp = strDatagram.split("/",2);
 		try {
 			reponseTxt = "ACK";
+			DatagramPacket reponse = new DatagramPacket(reponseTxt.getBytes(), reponseTxt.getBytes().length, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
+			ClientSocket.send(reponse);
+			System.out.println("ip distante: " + this.Distant_IP_address + "and distant port : " + this.Ports.get("Distant_Server_Port"));
+			System.out.println("ServerThreadAnswer : answer sent");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void repondre(MICDatagram datagram, int numSequence) {
+		InetAddress address;
+		String message;
+		String reponseTxt;
+		String strDatagram = datagram.getData();
+		try {
+			reponseTxt = String.valueOf(numSequence)+"ACK";
 			DatagramPacket reponse = new DatagramPacket(reponseTxt.getBytes(), reponseTxt.getBytes().length, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
 			ClientSocket.send(reponse);
 			System.out.println("ip distante: " + this.Distant_IP_address + "and distant port : " + this.Ports.get("Distant_Server_Port"));

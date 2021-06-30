@@ -35,7 +35,9 @@ public class main {
 		IP_distante="127.0.0.1";
 		Distant_Port=50001;
 		Local_Port=50001;
+		
 		int errorRate=2;
+		int startingSequenceNumber = 0;
 
 		int Distant_Server_Port = 50003;
 		int Distant_Client_Port = 50004;
@@ -57,14 +59,14 @@ public class main {
 		}
 		
 		if (modeServer) {
-			MICServerThread ServerThread = new MICServerThread(IP_distante, Ports);
+			MICServerThread ServerThread = new MICServerThread(IP_distante, Ports, startingSequenceNumber);
 			ServerThread.start();
 			//System.wait(10000);
 		}
 		
 		
 		if (modeClient) {
-			MICclientSocket clientSocket = new MICclientSocket(IP_distante, Ports, errorRate);
+			MICclientSocket clientSocket = new MICclientSocket(IP_distante, Ports, errorRate, startingSequenceNumber);
 			clientSocket.sendMessage(Lorem);
 		}
 		

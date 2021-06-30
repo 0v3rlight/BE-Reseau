@@ -23,7 +23,9 @@ public class MICServerThread extends Thread{
 	public int Distant_Port;
 	public InetAddress Distant_IP_address;
 	public boolean run;
+	public int numSequence;
 	
+	//deprecated
 	public MICServerThread(String Distant_IP_address) {
 		
 		try {
@@ -44,13 +46,15 @@ public class MICServerThread extends Thread{
 		System.out.println("ServerThread crÃ©Ã©");
 	}
 	
-	public MICServerThread(String Distant_IP_address, Map<String, Integer> Ports ) {
+	//deprecated
+	public MICServerThread(String Distant_IP_address, Map<String, Integer> Ports, int startingSequenceNumber) {
 		/*
 		this.Distant_Port = Distant_Port;
 		this.Local_Port = Local_Port;
 		*/
 		
 		this.Messages = new ArrayList<String>();
+		this.numSequence = startingSequenceNumber;
 		try {
 			this.ServerSocket = new DatagramSocket(Ports.get("Local_Server_Port"));
 		} catch (Exception e) {
@@ -64,7 +68,7 @@ public class MICServerThread extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("ServerThread crï¿½ï¿½");
+		System.out.println("ServerThread créé");
 	}
 	
 	
@@ -81,14 +85,33 @@ public class MICServerThread extends Thread{
 
 			DatagramPacket messageDatagram = new DatagramPacket(buffer, buffer.length);
 			try {
+				
 				ServerSocket.receive(messageDatagram);
 				MICDatagram message = new MICDatagram(messageDatagram); 
 				System.out.println("ServerThread : message recieved");
+
+				//on v a chercher le numSeq
+				String strDatagram = message.getData();
+				String[] temp = strDatagram.split("/",2);
+				int recievedNumSeq = Integer.valueOf(temp[0]);
 				
-				System.out.println(new String(message.getData()));
-				Messages.add(buffer.toString());
-				this.serverThreadAnswer.repondre(message);
+				//si recievedNumSeq est ok alors on accepte la trame et on répond ack				
+				if(recievedNumSeq == this.numSequence) {
+					//accepter
+					System.out.println(new String(message.getData()));
+					Messages.add(buffer.toString());
+					
+					//répondre
+					this.serverThreadAnswer.repondre(message, this.numSequence);
+					this.numSequence = (this.numSequence+1)%2;
+				}				
 				
+				//si recievedNumSeq pas ok alors on n'accepte pas la trame et répond ok
+				if(recievedNumSeq == this.numSequence) {
+					//répondre
+					this.serverThreadAnswer.repondre(message);
+				}
+
 			}catch (SocketTimeoutException e) {
 				ServerSocket.close();
 				this.run = false;				
@@ -96,8 +119,6 @@ public class MICServerThread extends Thread{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
 		}
 	}
 	

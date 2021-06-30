@@ -46,14 +46,15 @@ public class MICclientThread extends Thread{
 	}
 	*/
 	
-	public MICclientThread(InetAddress Local_IP_address, InetAddress Distant_IP_address,  Map<String, Integer> Ports, int ErrorRate) {
+	public MICclientThread(InetAddress Local_IP_address, InetAddress Distant_IP_address,  Map<String, Integer> Ports, int ErrorRate, int startingSequenceNumber) {
 		
 		this.Local_IP_address= Local_IP_address;
 		this.Distant_IP_address = Distant_IP_address;
 		this.Ports = Ports;
+		
 		this.ErrorRate = ErrorRate;
 		this.ErrorNbr = 0;
-		
+		this.sequenceNumber = startingSequenceNumber;
 		/*
 		this.Distant_Port = Distant_Port;
 		this.Local_Port = Local_Port;
@@ -87,7 +88,7 @@ public class MICclientThread extends Thread{
 			//si la liste contiens un message, on l'envoie
 			if(MessageList.size() > 0) {				
 		
-				//et on prépare le datagramme pour la réponse
+				//et on prépare le datagramme pour enregistrer la réponse
 				DatagramPacket reponse = new DatagramPacket(buffer, buffer.length);
 				
 				//on envoie le message
@@ -107,12 +108,19 @@ public class MICclientThread extends Thread{
 					//si on a pas de réponse dans le temps imparti:					
 					//soit on considère que l'erreur est acceptable
 					if(ErrorNbr<ErrorRate) {
+						//dans ce cas, on prend en compte la nouvelle erreur dans le taux 
 						ErrorNbr+=1;
+						//mais, comme si on avais eu une réponse, on augmente le numseq
+							//conséquence: le server acceptera le prochain packet
+						sequenceNumber = (sequenceNumber+1)%2;
 					}
 					//soit on renvoie
 					else {
 						MessageList.addFirst(Message);
 						System.out.println("ClientThread : on renvoie le message");
+						//ici on n'augmente pas le numseq parce que:
+							//si le serveur n'a pas recu le précédent msg, il recevra un msg avec le bon numseq
+							//si le serveur a recu le précédent msg mais le client n'a pas recu le ACK, le serveur ne prendra pas en compte 2fois le même message
 					}
 				}catch (IOException e) {
 					// TODO Auto-generated catch block

@@ -13,6 +13,7 @@ public class MICclientSocket {
 	private int Local_Port;
 	public Map<String, Integer> Ports;
 	public int ErrorRate;
+	public int startingSequenceNumber;
 
 	/*
 	public clientSocket(String Distant_IP_address) {
@@ -32,10 +33,11 @@ public class MICclientSocket {
 	}
 	*/
 
-	public MICclientSocket(String Distant_IP_address, Map<String, Integer> Ports,  int ErrorRate) {
+	public MICclientSocket(String Distant_IP_address, Map<String, Integer> Ports,  int ErrorRate, int startingSequenceNumber) {
 		try {
 			this.Local_IP_address = InetAddress.getLocalHost();
 			this.Ports = Ports;
+			this.startingSequenceNumber = startingSequenceNumber;
 			
 			/*
 			this.Distant_Port = Distant_Port;
@@ -49,7 +51,7 @@ public class MICclientSocket {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.MICclientThread = new MICclientThread(this.Local_IP_address, this.Distant_IP_address, this.Ports, this.ErrorRate);
+		this.MICclientThread = new MICclientThread(this.Local_IP_address, this.Distant_IP_address, this.Ports, this.ErrorRate, this.startingSequenceNumber);
 		this.MICclientThread.start();
 		System.out.println("clientSocket créé");
 	}
