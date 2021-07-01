@@ -39,16 +39,7 @@ public class main {
 		int errorRate=2;
 		int startingSequenceNumber = 0;
 
-		int Distant_Server_Port = 50003;
-		int Distant_Client_Port = 50004;
-		int Local_Server_Port = 50001;
-		int Local_Client_Port = 50002;
 		
-		Map<String, Integer> Ports = new HashMap<String, Integer>();
-		Ports.put("Distant_Server_Port", Distant_Server_Port);
-		Ports.put("Distant_Client_Port", Distant_Client_Port);
-		Ports.put("Local_Server_Port", Local_Server_Port);
-		Ports.put("Local_Client_Port", Distant_Client_Port);
 		
 		
 	 	try {
@@ -59,6 +50,16 @@ public class main {
 		}
 		
 		if (modeServer) {
+			int Distant_Server_Port = 50003;
+			int Distant_Client_Port = 50004;
+			int Local_Server_Port = 50001;
+			int Local_Client_Port = 50002;
+			
+			Map<String, Integer> Ports = new HashMap<String, Integer>();
+			Ports.put("Distant_Server_Port", Distant_Server_Port);
+			Ports.put("Distant_Client_Port", Distant_Client_Port);
+			Ports.put("Local_Server_Port", Local_Server_Port);
+			Ports.put("Local_Client_Port", Distant_Client_Port);
 			MICServerThread ServerThread = new MICServerThread(IP_distante, Ports, startingSequenceNumber);
 			ServerThread.start();
 			//System.wait(10000);
@@ -66,6 +67,16 @@ public class main {
 		
 		
 		if (modeClient) {
+			int Distant_Server_Port = 50001;
+			int Distant_Client_Port = 50002;
+			int Local_Server_Port = 50003;
+			int Local_Client_Port = 50004;
+			
+			Map<String, Integer> Ports = new HashMap<String, Integer>();
+			Ports.put("Distant_Server_Port", Distant_Server_Port);
+			Ports.put("Distant_Client_Port", Distant_Client_Port);
+			Ports.put("Local_Server_Port", Local_Server_Port);
+			Ports.put("Local_Client_Port", Distant_Client_Port);
 			MICclientSocket clientSocket = new MICclientSocket(IP_distante, Ports, errorRate, startingSequenceNumber);
 			clientSocket.sendMessage(Lorem);
 		}

@@ -91,9 +91,7 @@ public class MICServerThread extends Thread{
 				System.out.println("ServerThread : message recieved");
 
 				//on v a chercher le numSeq
-				String strDatagram = message.getData();
-				String[] temp = strDatagram.split("/",2);
-				int recievedNumSeq = Integer.valueOf(temp[0]);
+				int recievedNumSeq = message.getSequenceNumber();
 				
 				//si recievedNumSeq est ok alors on accepte la trame et on répond ack				
 				if(recievedNumSeq == this.numSequence) {

@@ -21,32 +21,32 @@ public class MICDatagram{
     
     public MICDatagram(DatagramPacket datagramRecieved){
 
-		String strDatagram = new String(datagram.getData(), datagram.getOffset(),datagram.getLength());
-		String[] temp = strDatagram.split("/",2);
+		String strDatagram = new String(datagramRecieved.getData(), datagramRecieved.getOffset(),datagramRecieved.getLength());
+		String[] temp = strDatagram.split("/",4);
 		this.seq = Integer.valueOf(temp[0]);
-		this.Distant_IP_address = temp[1];
+		this.Distant_IP_address = temp[2];
 		try {
 			this.Distant_IP_address_INET = InetAddress.getByName(Distant_IP_address);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.data = temp[2];
+		this.data = temp[3];
     }
     
     
     public MICDatagram(byte[] buffer, int length) {
 		String s = new String(buffer, StandardCharsets.UTF_8);
-		String[] temp = s.split("/",2);
+		String[] temp = s.split("/",4);
 		this.seq = Integer.valueOf(temp[0]);
-		this.Distant_IP_address = temp[1];
+		this.Distant_IP_address = temp[2];
 		try {
 			this.Distant_IP_address_INET = InetAddress.getByName(Distant_IP_address);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.data = temp[2];
+		this.data = temp[3];
 		
 	}
     
@@ -85,6 +85,11 @@ public class MICDatagram{
 
 	public String getData() {
 		return this.data;
+	}
+	
+	public String getStringPacket() {
+		return this.stringPacket;
+		
 	}
 
 }
