@@ -103,6 +103,8 @@ public class MICclientThread extends Thread{
 					if(ErrorNbr>0) {
 						ErrorNbr-=1;
 					}
+					this.sequenceNumber = (this.sequenceNumber+1)%2;
+					
 				}catch (SocketTimeoutException e) {		
 					System.out.println("ClientThread : pas de réponse du server");			
 					//si on a pas de réponse dans le temps imparti:					
@@ -141,7 +143,6 @@ public class MICclientThread extends Thread{
 		//on construit le datagramme
 		System.out.println("ClientThread : construction du message");
 		MICDatagram datagram = new MICDatagram(this.sequenceNumber, Packet, this.Local_IP_address, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
-		System.out.println(datagram.getStringPacket());
 		
 		//on envoie le datagramme
 		try {

@@ -102,10 +102,10 @@ public class MICServerThread extends Thread{
 					//répondre
 					this.serverThreadAnswer.repondre(message, this.numSequence);
 					this.numSequence = (this.numSequence+1)%2;
-				}				
-				
-				//si recievedNumSeq pas ok alors on n'accepte pas la trame et répond ok
-				if(recievedNumSeq == this.numSequence) {
+					
+					
+					//si recievedNumSeq pas ok alors on n'accepte pas la trame et répond ok
+				}else if(recievedNumSeq == this.numSequence) {
 					//répondre
 					this.serverThreadAnswer.repondre(message);
 				}
