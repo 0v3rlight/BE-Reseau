@@ -93,8 +93,9 @@ public class MICServerThreadAnswer extends Thread {
 		String strDatagram = datagram.getData();
 		try {
 			reponseTxt = String.valueOf(numSequence)+"ACK";
-			DatagramPacket reponse = new DatagramPacket(reponseTxt.getBytes(), reponseTxt.getBytes().length, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
-			ClientSocket.send(reponse);
+			//DatagramPacket reponse = new DatagramPacket(reponseTxt.getBytes(), reponseTxt.getBytes().length, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
+			AckDatagram reponse = new AckDatagram(numSequence,this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
+			ClientSocket.send(reponse.getDatagramPacket());
 			System.out.println("ip distante: " + this.Distant_IP_address + "and distant port : " + this.Ports.get("Distant_Server_Port"));
 			System.out.println("ServerThreadAnswer : answer sent");
 		} catch (UnknownHostException e) {

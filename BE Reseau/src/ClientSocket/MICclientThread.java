@@ -9,6 +9,8 @@ import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.Map;
 
+import ServerSocket.AckDatagram;
+
 public class MICclientThread extends Thread{
 	
 	public InetAddress Local_IP_address;
@@ -97,13 +99,28 @@ public class MICclientThread extends Thread{
 				send(Message);
 				System.out.println("ClientThread : message envoyé");
 				//on attends d'avoir la réponse
+				int recievedSequenceNumber = -1;
 				try {
-					ServerSocket.receive(reponse);
-					System.out.println("ClientThread : réponse recue:" + new String(reponse.getData()));
+					//tant qu'on ne recoit pas le ACK du message envoyé:
+					while(recievedSequenceNumber != sequenceNumber) {
+						//on continue à attendre un ACK
+						ServerSocket.receive(reponse);
+						System.out.println("ClientThread : réponse recue:" + new String(reponse.getData()));
+						AckDatagram MICReponse = new AckDatagram(reponse); 
+						recievedSequenceNumber = MICReponse.getSequenceNumber();
+						
+						//TODO: check argument suivant
+						// pas sûr que ce soit valide, mais il me semble logique d'ajuster le taux d'erreur en comptant les ACK recus tardivement comme valides
+						// cela évite de se retrouver dans une boucle où l'on envoie en boucle le même packet après chaque timeout, alors que celui ci met juste systématiquement trop de temps à arriver
+						// En ajustant on se retrouve donc avec une communication qui marche, mais lentement
+						// la ligne suivante est donc à enlever au cas où l'argument serait faux:
+						if(ErrorNbr>0) {ErrorNbr-=1;}
+					}		
+					//quand on recoit le bon ACK
 					if(ErrorNbr>0) {
 						ErrorNbr-=1;
 					}
-					this.sequenceNumber = (this.sequenceNumber+1)%2;
+					this.sequenceNumber = (this.sequenceNumber+1)%2;	
 					
 				}catch (SocketTimeoutException e) {		
 					System.out.println("ClientThread : pas de réponse du server");			
