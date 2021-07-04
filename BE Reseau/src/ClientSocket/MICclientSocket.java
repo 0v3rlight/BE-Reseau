@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class MICclientSocket {
 
-	public InetAddress Local_IP_address;
-	public InetAddress Distant_IP_address;
-	public int Distant_Port;
-	public MICclientThread MICclientThread;
+	private InetAddress Local_IP_address;
+	private InetAddress Distant_IP_address;
+	private int Distant_Port;
+	private MICclientThread MICclientThread;
 	private int Local_Port;
-	public Map<String, Integer> Ports;
-	public int ErrorRate;
-	public int startingSequenceNumber;
+	private Map<String, Integer> Ports;
+	private int ErrorRate;
+	private int startingSequenceNumber;
 
 	/*
 	public clientSocket(String Distant_IP_address) {

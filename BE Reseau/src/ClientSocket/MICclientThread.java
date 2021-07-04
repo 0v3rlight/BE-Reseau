@@ -13,16 +13,16 @@ import ServerSocket.AckDatagram;
 
 public class MICclientThread extends Thread{
 	
-	public InetAddress Local_IP_address;
-	public InetAddress Distant_IP_address;
-	public int Distant_Port;
-	public int Local_Port;
-	public Map<String, Integer> Ports;
-	public LinkedList<String> MessageList;
-	public DatagramSocket ServerSocket;
-	public DatagramSocket ClientSocket;
+	private InetAddress Local_IP_address;
+	private InetAddress Distant_IP_address;
+	private int Distant_Port;
+	private int Local_Port;
+	private Map<String, Integer> Ports;
+	private LinkedList<String> MessageList;
+	private DatagramSocket ServerSocket;
+	private DatagramSocket ClientSocket;
 	private byte[] buffer = new byte[256];
-	boolean erreurAcceptable;
+	private boolean erreurAcceptable;
 	
 	private int ErrorRate;
 	private int ErrorNbr;

@@ -12,12 +12,12 @@ import ClientSocket.MICDatagram;
 
 public class MICServerThreadAnswer extends Thread {
 
-	public DatagramSocket ClientSocket;
-	public int Distant_Port;
-	public InetAddress Distant_IP_address;
+	private DatagramSocket ClientSocket;
+	private int Distant_Port;
+	private InetAddress Distant_IP_address;
 	private byte[] buffer;
 	private int Local_Port;
-	public Map<String, Integer> Ports;
+	private Map<String, Integer> Ports;
 	
 	//deprecated
 	public MICServerThreadAnswer() {

@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 public class MICDatagram{
 
     private String data;
-    private int seq;
+    private int sequenceNumber;
     private DatagramPacket datagram;
     private String stringPacket;
     private byte[] bytePacket;
@@ -23,7 +23,7 @@ public class MICDatagram{
 
 		String strDatagram = new String(datagramRecieved.getData(), datagramRecieved.getOffset(),datagramRecieved.getLength());
 		String[] temp = strDatagram.split("/",4);
-		this.seq = Integer.valueOf(temp[0]);
+		this.sequenceNumber = Integer.valueOf(temp[0]);
 		this.Distant_IP_address = temp[2];
 		try {
 			this.Distant_IP_address_INET = InetAddress.getByName(Distant_IP_address);
@@ -38,7 +38,7 @@ public class MICDatagram{
     public MICDatagram(byte[] buffer, int length) {
 		String s = new String(buffer, StandardCharsets.UTF_8);
 		String[] temp = s.split("/",4);
-		this.seq = Integer.valueOf(temp[0]);
+		this.sequenceNumber = Integer.valueOf(temp[0]);
 		this.Distant_IP_address = temp[2];
 		try {
 			this.Distant_IP_address_INET = InetAddress.getByName(Distant_IP_address);
@@ -52,13 +52,13 @@ public class MICDatagram{
     
     
     public MICDatagram(int seq, String data, InetAddress local_IP, InetAddress distant_IP, int port){
-    	this.seq = seq;
+    	this.sequenceNumber = seq;
     	this.data = data;
     	this.Local_IP_address = local_IP.toString();
     	this.Distant_IP_address = distant_IP.toString();
     	this.Distant_IP_address_INET = distant_IP;
     	this.Distant_Server_Port = port;
-    	this.stringPacket = String.valueOf(this.seq)
+    	this.stringPacket = String.valueOf(this.sequenceNumber)
     						.concat("/")
     						.concat(this.Local_IP_address)
     						.concat("/")
@@ -79,7 +79,7 @@ public class MICDatagram{
     }
     
     public int getSequenceNumber() {
-    	return this.seq;
+    	return this.sequenceNumber;
     }
 
 

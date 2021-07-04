@@ -14,16 +14,16 @@ import ClientSocket.MICDatagram;
 
 public class MICServerThread extends Thread{
 	
-	public DatagramSocket ServerSocket;
-	public DatagramSocket ClientSocket;
+	private DatagramSocket ServerSocket;
+	private DatagramSocket ClientSocket;
 	private byte[] buffer = new byte[1024];
-	public MICServerThreadAnswer serverThreadAnswer;
-	public ArrayList<String> Messages;
-	public int Local_Port;
-	public int Distant_Port;
-	public InetAddress Distant_IP_address;
-	public boolean run;
-	public int numSequence;
+	private MICServerThreadAnswer serverThreadAnswer;
+	private ArrayList<String> Messages;
+	private int Local_Port;
+	private int Distant_Port;
+	private InetAddress Distant_IP_address;
+	private boolean run;
+	private int numSequence;
 	
 	//deprecated
 	public MICServerThread(String Distant_IP_address) {
@@ -46,7 +46,6 @@ public class MICServerThread extends Thread{
 		System.out.println("ServerThread créé");
 	}
 	
-	//deprecated
 	public MICServerThread(String Distant_IP_address, Map<String, Integer> Ports, int startingSequenceNumber) {
 		/*
 		this.Distant_Port = Distant_Port;
