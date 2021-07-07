@@ -1,9 +1,12 @@
 package test;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Map;
 
+import ClientSocket.MICDatagram;
 import Main.mictcp;
 
 public class Proxy extends Thread {
@@ -28,6 +31,7 @@ public class Proxy extends Thread {
 	private Map<String, Integer> Ports;
 	private mictcp APIServer;
 	private mictcp APIClient;
+	private byte[] buffer = new byte[1024];
 	
 	public Proxy( int Proxy_Server_Port, int Proxy_Client_Port){
 		
@@ -35,7 +39,7 @@ public class Proxy extends Thread {
 
 		try {
 			this.proxyServer = new DatagramSocket(Proxy_Server_Port);
-			this.proxyServer = new DatagramSocket(Proxy_Client_Port);
+			this.proxyClient = new DatagramSocket(Proxy_Client_Port); 
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,6 +54,39 @@ public class Proxy extends Thread {
 		APIServer = new mictcp("server", IP_locale, serverPort, Proxy_Client_Port, errorRate);
 		APIClient = new mictcp("client", IP_locale, clientPort, Proxy_Server_Port, errorRate);
 		APIClient.send(Lorem);
+		while(true) {
+			
+			DatagramPacket recievedData = new DatagramPacket(buffer, buffer.length);
+			
+			try {
+				proxyServer.receive(recievedData);
+				
+				
+				System.out.println("Proxy: datagram recu");
+				
+				
+				MICDatagram transmitDatagram = new MICDatagram(recievedData);
+				transmitDatagram.changeDistantPort(serverPort);
+				proxyClient.send(transmitDatagram.getDatagramPacket());
+				System.out.println("Proxy: datagram transmit");
+				
+				
+				/*
+				proxyServer.receive(Datagram);
+				System.out.println("Proxy: ACK recu");
+				
+				
+				
+				proxyClient.send(Datagram);
+				System.out.println("Proxy: datagram transmit");
+				
+				*/
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	

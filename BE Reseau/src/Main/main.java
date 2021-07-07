@@ -35,7 +35,7 @@ public class main {
 	
 	public static void main(String[] args){
 
-		/*
+		
 		modeServer = false;
 		modeClient = true;
 		IP_distante="127.0.0.1";
@@ -85,14 +85,14 @@ public class main {
 			clientSocket.sendMessage(Lorem);
 		}
 		
-		*/
+		
 		
 
-
+		/*
 		int Proxy_Server_Port = 5000;
 		int Proxy_Client_Port = 5001;
 		Proxy proxy = new Proxy(Proxy_Server_Port,Proxy_Client_Port );
-		
+		*/
 		
 		
 		

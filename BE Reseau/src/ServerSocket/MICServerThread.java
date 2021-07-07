@@ -91,7 +91,7 @@ public class MICServerThread extends Thread{
 				//on v a chercher le numSeq
 				int recievedNumSeq = message.getSequenceNumber();
 				
-				//si recievedNumSeq est ok alors on accepte la trame et on répond ack				
+				//si recievedNumSeq est ok alors on accepte la trame (l'ajouter au buffer) et on répond ack+numseq
 				if(recievedNumSeq == this.numSequence) {
 					//accepter
 					System.out.println(new String(message.getData()));
@@ -102,8 +102,8 @@ public class MICServerThread extends Thread{
 					this.numSequence = (this.numSequence+1)%2;
 					
 					
-					//si recievedNumSeq pas ok alors on n'accepte pas la trame et répond ok
-				}else if(recievedNumSeq == this.numSequence) {
+					//si recievedNumSeq pas ok alors on n'accepte pas la trame et répond ack+numseq
+				}else if(recievedNumSeq != this.numSequence) {
 					//répondre
 					this.serverThreadAnswer.repondre(message);
 				}

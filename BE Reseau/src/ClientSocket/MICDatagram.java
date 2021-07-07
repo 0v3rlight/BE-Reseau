@@ -25,6 +25,7 @@ public class MICDatagram{
 		String[] temp = strDatagram.split("/",4);
 		this.sequenceNumber = Integer.valueOf(temp[0]);
 		this.Distant_IP_address = temp[2];
+		
 		try {
 			this.Distant_IP_address_INET = InetAddress.getByName(Distant_IP_address);
 		} catch (UnknownHostException e) {
@@ -32,6 +33,11 @@ public class MICDatagram{
 			e.printStackTrace();
 		}
 		this.data = temp[3];
+		this.stringPacket = String.valueOf(this.sequenceNumber)
+				.concat("/")
+				.concat("unknownLocalhost")
+				.concat("/")
+				.concat(this.data);
     }
     
     
@@ -68,8 +74,8 @@ public class MICDatagram{
     										this.Distant_IP_address_INET,
     										this.Distant_Server_Port);
     }
-
-
+    
+    
 	public byte[] getByte() {
     	return this.bytePacket;    	
     }
@@ -90,6 +96,19 @@ public class MICDatagram{
 	public String getStringPacket() {
 		return this.stringPacket;
 		
+	}
+	
+	public void changeDistantPort(int newPort) {
+		this.Distant_Server_Port = newPort;
+    	this.stringPacket = String.valueOf(this.sequenceNumber)
+				.concat("/")
+				.concat("unknownLocalhost")
+				.concat("/")
+				.concat(this.data);
+		this.bytePacket = this.stringPacket.getBytes();
+		this.datagram = new DatagramPacket(bytePacket, bytePacket.length,
+											this.Distant_IP_address_INET,
+											this.Distant_Server_Port);
 	}
 
 }

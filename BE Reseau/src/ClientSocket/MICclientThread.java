@@ -108,10 +108,8 @@ public class MICclientThread extends Thread{
 						System.out.println("ClientThread : réponse recue:" + new String(reponse.getData()));
 						AckDatagram MICReponse = new AckDatagram(reponse); 
 						recievedSequenceNumber = MICReponse.getSequenceNumber();
-						
-						//TODO: check argument suivant
-						// pas sûr que ce soit valide, mais il me semble logique d'ajuster le taux d'erreur en comptant les ACK recus tardivement comme valides
-						// cela évite de se retrouver dans une boucle où l'on envoie en boucle le même packet après chaque timeout, alors que celui ci met juste systématiquement trop de temps à arriver
+						//ajuster le taux d'erreur en comptant les ACK recus tardivement comme valides
+						// cela évite de se retrouver dans une situation où on envoie 2 fois, voi plus, le même packet après chaque timeout, alors que celui ci met juste systématiquement trop de temps à arriver
 						// En ajustant on se retrouve donc avec une communication qui marche, mais lentement
 						// la ligne suivante est donc à enlever au cas où l'argument serait faux:
 						if(ErrorNbr>0) {ErrorNbr-=1;}
@@ -159,11 +157,11 @@ public class MICclientThread extends Thread{
 	public void send(String Packet) {
 		//on construit le datagramme
 		System.out.println("ClientThread : construction du message");
-		MICDatagram datagram = new MICDatagram(this.sequenceNumber, Packet, this.Local_IP_address, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
+		MICDatagram MICdatagram = new MICDatagram(this.sequenceNumber, Packet, this.Local_IP_address, this.Distant_IP_address, this.Ports.get("Distant_Server_Port"));
 		
 		//on envoie le datagramme
 		try {
-			ClientSocket.send(datagram.getDatagramPacket());
+			ClientSocket.send(MICdatagram.getDatagramPacket());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
