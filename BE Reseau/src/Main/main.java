@@ -7,6 +7,7 @@ import java.util.Map;
 
 import ClientSocket.MICclientSocket;
 import ServerSocket.MICServerThread;
+import test.Proxy;
 
 public class main {
 	private static String Lorem = "Eminuit autem inter humilia supergressa iam impotentia fines mediocrium delictorum nefanda Clematii cuiusdam Alexandrini nobilis mors repentina; cuius socrus cum misceri sibi generum, flagrans eius amore, non impetraret, ut ferebatur, per palatii pseudothyrum introducta, oblato pretioso reginae monili id adsecuta est, ut ad Honoratum tum comitem orientis formula missa letali omnino scelere nullo contactus idem Clematius nec hiscere nec loqui permissus occideretur.\r\n"
@@ -34,6 +35,7 @@ public class main {
 	
 	public static void main(String[] args){
 
+		/*
 		modeServer = false;
 		modeClient = true;
 		IP_distante="127.0.0.1";
@@ -83,6 +85,18 @@ public class main {
 			clientSocket.sendMessage(Lorem);
 		}
 		
-	}
+		*/
+		
 
+
+		int Proxy_Server_Port = 5000;
+		int Proxy_Client_Port = 5001;
+		Proxy proxy = new Proxy(Proxy_Server_Port,Proxy_Client_Port );
+		
+		
+		
+		
+		
+		
+	}
 }

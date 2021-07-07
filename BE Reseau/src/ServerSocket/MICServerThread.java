@@ -45,7 +45,6 @@ public class MICServerThread extends Thread{
 		this.serverThreadAnswer.start();
 		System.out.println("ServerThread créé");
 	}
-	
 	public MICServerThread(String Distant_IP_address, Map<String, Integer> Ports, int startingSequenceNumber) {
 		/*
 		this.Distant_Port = Distant_Port;

@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 /ClientSocket/
 /Main/
 /Proxy/
 /ServerSocket/
 /mictcp.class
 /test/
+=======
+/test/
+/Main/
+/mictcp.class
+/ServerSocket/
+>>>>>>> a0e1032 (added stuff, test structure almost done)

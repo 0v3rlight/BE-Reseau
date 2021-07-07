@@ -1,3 +1,5 @@
+package Main;
+
 
 
 import java.net.InetAddress;
@@ -30,6 +32,9 @@ public class mictcp {
 
 	
 	public mictcp(String mode, String Address, int LocalPort, int DistantPort, int ErrorRate) {
+		
+		
+		
 		this.setMode(mode);
 		this.setAddress(Address);
 		this.setLocalPort(LocalPort);
@@ -38,14 +43,14 @@ public class mictcp {
 		this.startingSequenceNumber = 0;
 		
 		if (modeServer) {
-			MICServerThread ServerThread = new MICServerThread(Distant_IP, Ports, startingSequenceNumber);
+			this.ServerThread = new MICServerThread(Distant_IP, Ports, startingSequenceNumber);
 			ServerThread.start();
 			//System.wait(10000);
 		}
 		
 		
 		if (modeClient) {
-			MICclientSocket clientSocket = new MICclientSocket(Distant_IP, Ports, ErrorRate, startingSequenceNumber);
+			this.clientSocket = new MICclientSocket(Distant_IP, Ports, ErrorRate, startingSequenceNumber);
 		}
 		
 	}
@@ -68,6 +73,10 @@ public class mictcp {
 	public void setLocalPort(int port) {
 		this.Local_Server_Port = port;
 		this.Local_Client_Port = port+1;
+		
+
+		this.Ports = new HashMap<String, Integer>();
+		
 		this.Ports.put("Local_Server_Port", Local_Server_Port);
 		this.Ports.put("Local_Client_Port", Local_Client_Port);
 	}
@@ -82,5 +91,15 @@ public class mictcp {
 	}
 	public ArrayList<String> recv() {
 		return this.ServerThread.getMessages();
+	}
+	
+	public int getLocalClientPort() {
+		return this.Local_Client_Port;
+	}
+	public int getLocalServerPort() {
+		return this.Local_Server_Port;
+	}
+	public int getDistantPort() {
+		return this.Distant_Server_Port;
 	}
 }
